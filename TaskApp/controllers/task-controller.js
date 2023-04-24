@@ -1,7 +1,7 @@
 const Task = require('../models/task');
 
 const handleError = (res, error) => {
-    res.status(500).json({ error });
+    res.send(error.message);
 }
 
 const getTasks = async (req, res) => {
