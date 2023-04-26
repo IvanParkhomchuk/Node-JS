@@ -97,11 +97,12 @@ const authenticate = async (req, res) => {
 };
 const logout = async (req, res) => {
     try {
-        req.user.tokens.filter((token) => {
+        req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token;
         });
 
         await req.user.save();
+
         res.send({ message: 'Logged out successfully' });
     } catch (err) {
         res.status(500).send(err);

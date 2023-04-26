@@ -47,7 +47,7 @@ const UserSchema = new mongoose.Schema({
             required: true
         }
     }]
-});
+}, {toJSON: {virtuals: true}, toObject: {virtuals: true}});
 
 // Перед збереженням хешуємо пароль
 UserSchema.pre('save', async function (next) {
@@ -62,6 +62,20 @@ UserSchema.pre('save', async function (next) {
 
     next();
 });
+
+UserSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+});
+
+UserSchema.methods.JSON = function() {
+    const user = this;
+    const userObject = user.toObject();
+    delete userObject.password;
+    delete userObject.tokens;
+    return userObject;
+}
 
 const User = mongoose.model('User', UserSchema);
 
