@@ -33,7 +33,7 @@ const addTask = async (req, res) => {
 
     try {
         await task.save();
-        res.status(201).json(task);
+        res.status(200).json(task);
     } catch(err) {
         handleError(res, err);
     }

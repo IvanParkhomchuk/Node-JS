@@ -27,9 +27,9 @@ const addUser = async (req, res) => {
 
     try {
         await user.save();
-        res.status(201).json(user);
+        res.status(200).json(user);
     } catch(err) {
-        handleError(res, err);
+        res.status(401).send();
     }
 };
 const deleteUser = async (req, res) => {
